@@ -28,9 +28,10 @@
     const observer=new IntersectionObserver(entries=>{entries.filter(e=>e.isIntersecting).forEach((entry,i)=>{observer.unobserve(entry.target);later(()=>build(entry.target),i*160)})},{threshold:.08}); targets.forEach(el=>observer.observe(el));
     function finish(){if(stopped)return;stopped=true;active=false;cancelAnimationFrame(frame);observer.disconnect();timers.forEach(clearTimeout);targets.forEach(el=>el.classList.remove('swarm-pending','swarm-building','swarm-writing'));layer.remove();controls.remove();document.removeEventListener('keydown',onKey)}
     const onKey=e=>{if(e.key==='Escape')finish()};document.addEventListener('keydown',onKey);controls.querySelector('button').onclick=finish;
-    const begin=performance.now(),duration=32000;
-    function tour(now){if(stopped)return;const progress=Math.min(1,(now-begin)/duration);const max=document.documentElement.scrollHeight-innerHeight;window.scrollTo(0,max*Math.max(0,(progress-.13)/.87));if(progress<1)frame=requestAnimationFrame(tour);else later(finish,2500)}
+    const begin=performance.now(),duration=16000;
+    function tour(now){if(stopped)return;const progress=Math.min(1,(now-begin)/duration);const max=document.documentElement.scrollHeight-innerHeight;window.scrollTo(0,max*Math.max(0,(progress-.08)/.92));if(progress<1)frame=requestAnimationFrame(tour);else later(finish,2500)}
     frame=requestAnimationFrame(tour);
   }
   replay.addEventListener('click',start); start();
 })();
+
